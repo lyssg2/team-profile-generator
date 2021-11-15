@@ -86,7 +86,28 @@ function addMember() {
                         }
                     ]
                 ).then(({ github, newMember }) => {
-                    Engineer.push(new Manager(member, id, email, github))
+                    Engineer.push(new Engineer(member, id, email, github))
+                    if (newMember) {
+                        return prompt()
+                    }
+                })
+        } else if (role === "Intern") {
+            return inquirer
+                .prompt(
+                    [{
+                            type: 'input',
+                            message: 'What school are you attending?',
+                            type: 'school'
+                        },
+                        {
+                            type: 'confirm',
+                            message: 'Would you like to add another member?',
+                            name: 'anotherMember',
+                            default: 'false'
+                        }
+                    ]
+                ).then(({ school, newMember }) => {
+                    Intern.push(new Intern(member, id, email, school))
                     if (newMember) {
                         return prompt()
                     }
