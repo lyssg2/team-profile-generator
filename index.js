@@ -31,7 +31,7 @@ function addMember() {
             {
                 type: 'input',
                 message: "What is this member's name?",
-                name: 'member'
+                name: 'name'
             },
             {
                 type: 'input',
@@ -46,7 +46,7 @@ function addMember() {
 
         ]
 
-    ).then(({ role, member, id, email }) => {
+    ).then(({ role, name, id, email }) => {
         if (role === "Manager") {
             return inquirer
                 .prompt(
@@ -63,7 +63,7 @@ function addMember() {
                         }
                     ]
                 ).then(({ office, newMember }) => {
-                    Manager.push(new Manager(member, id, email, office))
+                    Manager.push(new Manager(name, id, email, office))
                     if (newMember) {
                         return prompt()
                     }
@@ -85,7 +85,7 @@ function addMember() {
                         }
                     ]
                 ).then(({ github, newMember }) => {
-                    Engineer.push(new Engineer(member, id, email, github))
+                    Engineer.push(new Engineer(name, id, email, github))
                     if (newMember) {
                         return prompt()
                     }
@@ -106,7 +106,7 @@ function addMember() {
                         }
                     ]
                 ).then(({ school, newMember }) => {
-                    Intern.push(new Intern(member, id, email, school))
+                    Intern.push(new Intern(name, id, email, school))
                     if (newMember) {
                         return prompt()
                     }
