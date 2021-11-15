@@ -9,7 +9,6 @@ const fs = require('fs')
 
 const Manager = require('./lib/Manager')
 const Engineer = require('./lib/Engineer')
-const Employee = require('./lib/Employee')
 const Intern = require('./lib/Intern')
 
 //  Blank Team array
@@ -114,4 +113,18 @@ function addMember() {
                 })
         }
     })
+}
+
+// Creates the HTML to be generated 
+function writeToFile(fileName, data) {
+    fs.writeFile('./dist/index.html', data, (err) =>
+        err ? console.error('error', err) : console.log('Success! your HTML was generated')
+    )
+}
+// Initializes app
+function init() {
+    inquirer.prompt(addMember)
+        .then((data) => {
+            writeToFile('team.html', generateHTML(data))
+        })
 }
