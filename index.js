@@ -46,9 +46,9 @@ function addMember() {
 
         ]
 
-    ).then(({ role, name, id, email }) => {
+    ).then(async({ role, name, id, email }) => {
         if (role === "Manager") {
-            return inquirer
+            const { office, newMember } = await inquirer
                 .prompt(
                     [{
                             type: 'input',
@@ -62,15 +62,14 @@ function addMember() {
                             default: 'false'
                         }
                     ]
-                ).then(({ office, newMember }) => {
-                    Manager.push(new Manager(name, id, email, office))
-                    if (newMember) {
-                        return prompt()
-                    }
-                })
+                );
+            Manager.push(new Manager(name, id, email, office));
+            if (newMember) {
+                return prompt();
+            }
 
         } else if (role === "Engineer") {
-            return inquirer
+            const { github, newMember: newMember_1 } = await inquirer
                 .prompt(
                     [{
                             type: 'input',
@@ -84,14 +83,13 @@ function addMember() {
                             default: 'false'
                         }
                     ]
-                ).then(({ github, newMember }) => {
-                    Engineer.push(new Engineer(name, id, email, github))
-                    if (newMember) {
-                        return prompt()
-                    }
-                })
+                );
+            Engineer.push(new Engineer(name, id, email, github));
+            if (newMember_1) {
+                return prompt();
+            }
         } else if (role === "Intern") {
-            return inquirer
+            const { school, newMember: newMember_2 } = await inquirer
                 .prompt(
                     [{
                             type: 'input',
@@ -105,12 +103,11 @@ function addMember() {
                             default: 'false'
                         }
                     ]
-                ).then(({ school, newMember }) => {
-                    Intern.push(new Intern(name, id, email, school))
-                    if (newMember) {
-                        return prompt()
-                    }
-                })
+                );
+            Intern.push(new Intern(name, id, email, school));
+            if (newMember_2) {
+                return prompt();
+            }
         }
     })
 }
