@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+Antique&display=swap');
+html {
+    font-family: 'Zen Kaku Gothic Antique', sans-serif;
+}
+
+.big {
+    background-image: url("https://images.hdqwalls.com/download/minimal-abstract-background-5k-hi-1600x900.jpg");
+    max-width: 100%;
+    height: 703px;
+}
+
+#cards {
+    margin: 20px;
+}
