@@ -1,27 +1,36 @@
+const Employee = require('../lib/Employee')
 const Manager = require('../lib/Manager')
 const Engineer = require('../lib/Engineer')
 const Intern = require('../lib/Intern')
 
+const fs = require('fs')
+
 function generateTeamCards(team) {
     let cards = []
     for (let i = 0; i < team.length; i++) {
-        const team = array[i];
-        switch (team.getRole()) {
-            case 'Manager':
-                const manager = new Manager(team.id, team.name, team.email, team.office);
-                cards.push(generateManagerCard(manager));
-                break;
-            case 'Engineer':
-                const engineer = new Engineer(team.id, team.name, team.email, team.github);
-                cards.push(generateEngineerCard(engineer));
-                break;
-            case 'Intern':
-                const intern = new Intern(team.id, team.name, team.email, team.school);
-                cards.push(generateInternCard(intern));
-                break;
+        // const team = team[i];
+        const employee = team[i]
+
+        if ('Manager') {
+            const managerCard = generateManagerCard(employee)
+            cards.push(managerCard)
         }
+        if ('Engineer') {
+            const engineerCard = generateEngineerCard(employee)
+            cards.push(engineerCard)
+        }
+        if ('Intern') {
+            const internCard = generateInternCard(employee)
+            cards.push(internCard)
+        }
+
+        console.log(team)
+
+        const memberCards = cards.join(``)
+        const generatePage = generateHTML(memberCards)
+
+        return generatePage
     }
-    return cards.join(``)
 }
 
 let generateManagerCard = (Manager) => {
@@ -72,7 +81,8 @@ let generateInternCard = (Intern) => {
     `
 }
 
-function generateTeamProfile(team) {
+
+const generateHTML = function(cards) {
     return `
     <!DOCTYPE html>
 <html lang="en">
@@ -99,7 +109,7 @@ function generateTeamProfile(team) {
     <main>
         <div class="big">
             <div class="row valign-wrapper">
-            ${generateTeamCards(team)}
+            ${cards}
             </div>
         </div>
     </main>
@@ -110,3 +120,7 @@ function generateTeamProfile(team) {
 
 </html>`
 }
+
+
+
+module.exports = generateTeamCards
