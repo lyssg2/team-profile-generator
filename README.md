@@ -8,6 +8,7 @@ The purpose of this project is to help the fellow developer quickly and easily g
 2. [Requirements](#Requirements)
 3. [Execution](#execution)
 4. [Issues](#Issues)
+5. [Video](#Video)
 6. [Help](#help)
 7. [Author](#Author)
 8. [Versions](#versions)
@@ -34,7 +35,14 @@ To use generator:
 
 ## Issues
 
-This version is incomplete, a work in progress
+As of 2/09/2022, issues have been fixed and the application is fully functional!
+
+## Video
+Watch below for a video walkthrough demo.
+
+
+https://user-images.githubusercontent.com/89744530/153341872-e33bdadd-6919-4b57-9974-ac0a670e09ca.mp4
+
 
 ## Help
 Please contact me if there are any issues!
