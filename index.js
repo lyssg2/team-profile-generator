@@ -1,7 +1,7 @@
 // Node modules
 const inquirer = require('inquirer');
 const fs = require('fs')
-
+const path = require('path'); 
 
 // Team member profiles
 
@@ -11,7 +11,7 @@ const Intern = require('./lib/Intern')
 const Employee = require('./lib/Employee')
 
 //  Blank Team array
-var team = ['']
+var team = []; 
 
 // Questions prompts through Inquirer
 
@@ -37,20 +37,18 @@ const managerQuestions = () => {
                 name: 'office'
             },
             {
-                type: 'confirm',
-                message: 'Would you like to add another member?',
+                type: 'list',
+                message: 'What type of member would you like to add?',
                 name: 'anotherMember',
-                default: 'false'
+                choices: ['Engineer', 'Intern', 'No new member']
             }
         ])
         .then(managerInput => {
             const manager = new Manager(managerInput.name, managerInput.id, managerInput.email, managerInput.office)
             team.push(manager)
+            console.log(team)
 
             switch (managerInput.anotherMember) {
-                case 'anotherMember':
-                    addEmployee()
-                    break;
                 case 'Engineer':
                     engineerQuestions();
                     break;
@@ -58,104 +56,100 @@ const managerQuestions = () => {
                     internQuestions();
                     break;
                 default:
-                    generateTeamCards()
+                    generateTeamCards(team); 
+                    break; 
             }
         })
 }
 
 const engineerQuestions = () => {
     inquirer.prompt([{
-            type: 'list',
-            name: 'role',
-            message: "Please choose your employee's role",
-            choices: ['Engineer', 'Intern']
+            type: 'input',
+            message: "What is this engineer's name?",
+            name: 'name'
         },
         {
             type: 'input',
-            message: "What is this member's ID?",
+            message: "What is this engineer's ID?",
             name: 'id'
         },
         {
             type: 'input',
-            message: "What is this member's email?",
+            message: "What is this engineer's email?",
             name: 'email'
         },
         {
             type: 'input',
-            message: 'What is your GitHub username?',
-            type: 'github'
+            message: "What is the engineer's GitHub username?",
+            name: 'github'
         },
         {
-            type: 'confirm',
-            message: 'Would you like to add another member?',
+            type: 'list',
+            message: 'What type of member would you like to add?',
             name: 'anotherMember',
-            default: 'false'
+            choices: ['Engineer', 'Intern', 'No new member']
         }
     ]).then(engineerInput => {
-        const engineer = new Engineer(engineerInput.name, engineerInput.id, engineerInput.email, engineerInput.office)
+        console.log("Engineer Input", engineerInput); 
+
+        const engineer = new Engineer(engineerInput.name, engineerInput.id, engineerInput.email, engineerInput.github)
         team.push(engineer)
 
 
-        switch (engineerInput.addMember) {
+        switch (engineerInput.anotherMember) {
             case 'Engineer':
-                engineerQuestions();
+                engineerQuestions(team);
                 break;
             case 'Intern':
-                internQuestions();
+                internQuestions(team);
                 break;
             default:
-                generateTeamCards()
+                generateTeamCards(team)
         }
     })
 }
 
 const internQuestions = () => {
     inquirer.prompt([{
-            type: 'list',
-            name: 'role',
-            message: "Please choose your employee's role",
-            choices: ['Engineer', 'Intern']
-        },
-        {
 
             type: 'input',
-            message: "What is this member's name?",
+            message: "What is this intern's name?",
             name: 'name'
         },
         {
             type: 'input',
-            message: "What is this member's ID?",
+            message: "What is this intern's ID?",
             name: 'id'
         },
         {
             type: 'input',
-            message: "What is this member's email?",
+            message: "What is this intern's email?",
             name: 'email'
         },
         {
             type: 'input',
             message: 'Which school are you attending?',
-            type: 'school'
+            name: 'school'
         },
         {
-            type: 'confirm',
-            message: 'Would you like to add another member?',
+            type: 'list',
+            message: 'What type of member would you like to add?',
             name: 'anotherMember',
-            default: 'false'
+            choices: ['Engineer', 'Intern', 'No new member']
         }
     ]).then(internInput => {
-        const intern = new Intern(internInput.name, internInput.id, internInput.email, internInput.office)
+        const intern = new Intern(internInput.name, internInput.id, internInput.email, internInput.school)
         team.push(intern)
 
-        switch (internInput.addMember) {
+        switch (internInput.anotherMember) {
             case 'Engineer':
-                engineerQuestions();
+                engineerQuestions(team);
                 break;
             case 'Intern':
-                internQuestions();
+                internQuestions(team);
                 break;
             default:
-                generateTeamCards()
+                generateTeamCards(team)
         }
     })
 }
@@ -164,40 +158,41 @@ managerQuestions()
 
 function generateTeamCards(team) {
 
-    let cards = []
+    let cards = []; 
+    let pageData;  
+    //console.log(team)
 
     for (let i = 0; i < team.length; i++) {
-
-        switch (team[i].role) {
+        //console.log("Each Member Info ", team[i]);
+        
+        switch (team[i].getRole()) {
             case 'Manager':
                 let generateManagerCard =
                     `
                     <div class="col s12 m6" id="cards">
                         <div class="card grey darken-4">
                             <div class="card-content white-text">
-                                <span class="card-title">${Manager.name}</span>
+                                <span class="card-title">${team[i].getName()}</span>
                                         <h5>Manager</h4>
-                                        <p class="id">ID: ${Manager.id}</p>
-                                        <p class="email">Email: ${Manager.email}</p>
-                                        <p class="office">Office Number: ${Manager.office}</p>
+                                        <p class="id">${team[i].getId()}</p>
+                                        <p class="email">${team[i].getEmail()}</p>
+                                        <p class="office">${team[i].getOffice()}</p>
                             </div>        
                         </div>
                     </div>
-                    `
+                    `; 
                 cards.push(generateManagerCard)
-
                 break;
             case 'Engineer':
                 let generateEngineerCard =
-                    `
-                    <div class="col s12 m6" id="cards">
+                    `<div class="col s12 m6" id="cards">
                         <div class="card grey darken-4">
                             <div class="card-content white-text">
-                                <span class="card-title">${Engineer.name}</span>
+                                <span class="card-title">${team[i].getName()}</span>
                                         <h5>Engineer</h4>
-                                        <p class="id">ID: ${Engineer.id}</p>
-                                        <p class="email">Email: ${Engineer.email}</p>
-                                        <p class="office">Office Number: ${Engineer.github}</p>
+                                        <p class="id">${team[i].getId()}</p>
+                                        <p class="email"> ${team[i].getEmail()}</p>
+                                        <p class="office">Github Username: ${team[i].getGithub()}</p>
                             </div>        
                         </div>
                     </div>
@@ -207,29 +202,42 @@ function generateTeamCards(team) {
 
             case 'Intern':
                 let generateInternCard =
-                    `
-                    <div class="col s12 m6" id="cards">
+                    `<div class="col s12 m6" id="cards">
                         <div class="card grey darken-4">
                             <div class="card-content white-text">
-                                <span class="card-title">${Intern.name}</span>
+                                <span class="card-title">${team[i].getName()}</span>
                                         <h5>Intern</h4>
-                                        <p class="id">ID: ${Intern.id}</p>
-                                        <p class="email">Email: ${Intern.email}</p>
-                                        <p class="office">Office Number: ${Intern.office}</p>
+                                        <p class="id">${team[i].getId()}</p>
+                                        <p class="email">${team[i].getEmail()}</p>
+                                        <p class="office">School Name:${team[i].getSchool()}</p>
                             </div>        
                         </div>
                     </div>
                     `
                 cards.push(generateInternCard)
                 break;
+            default:
+               
+               break; 
         }
     }
+     //HTML template with userdata
+     pageData=generateHTML(cards); 
+
+    //console.log("Html template", pageData);
+    //grabbing the dist folder to save the html outcome there 
+    const folder = path.resolve(__dirname, 'dist'); 
+    writeToFile(path.join(folder,'teamprofile.html'), pageData);  
+}
+const writeToFile = (fileName, data) => {
+
+    fs.writeFile(`${fileName}`, data, (err) =>
+        err ? console.error('Error! : ' + err) : console.log('Your HTML has been successfully generated!'))
 }
 
 
 const generateHTML = function(cards) {
-        return `
-    <!DOCTYPE html>
+        return `<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -265,11 +273,3 @@ const generateHTML = function(cards) {
 
 </html>`
     }
-
-    const writeToFile = (fileName, data) => {
-
-        fs.writeFile(`${fileName}`, data, (err) =>
-            err ? console.error('Error! : ' + err) : console.log('Your HTML has been successfully generated!'))
-    }
-
-    module.exports = generateHTML
