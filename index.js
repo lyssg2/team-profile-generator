@@ -174,9 +174,9 @@ function generateTeamCards(team) {
                             <div class="card-content white-text">
                                 <span class="card-title">${team[i].getName()}</span>
                                         <h5>Manager</h4>
-                                        <p class="id">${team[i].getId()}</p>
-                                        <p class="email">${team[i].getEmail()}</p>
-                                        <p class="office">${team[i].getOffice()}</p>
+                                        <p class="id">ID: ${team[i].getId()}</p>
+                                        <p class="email">Email: ${team[i].getEmail()}</p>
+                                        <p class="office">Office: ${team[i].getOffice()}</p>
                             </div>        
                         </div>
                     </div>
@@ -190,8 +190,8 @@ function generateTeamCards(team) {
                             <div class="card-content white-text">
                                 <span class="card-title">${team[i].getName()}</span>
                                         <h5>Engineer</h4>
-                                        <p class="id">${team[i].getId()}</p>
-                                        <p class="email"> ${team[i].getEmail()}</p>
+                                        <p class="id">ID: ${team[i].getId()}</p>
+                                        <p class="email">Email:  ${team[i].getEmail()}</p>
                                         <p class="office">Github Username: ${team[i].getGithub()}</p>
                             </div>        
                         </div>
@@ -207,8 +207,8 @@ function generateTeamCards(team) {
                             <div class="card-content white-text">
                                 <span class="card-title">${team[i].getName()}</span>
                                         <h5>Intern</h4>
-                                        <p class="id">${team[i].getId()}</p>
-                                        <p class="email">${team[i].getEmail()}</p>
+                                        <p class="id">ID: ${team[i].getId()}</p>
+                                        <p class="email">Email: ${team[i].getEmail()}</p>
                                         <p class="office">School Name:${team[i].getSchool()}</p>
                             </div>        
                         </div>
